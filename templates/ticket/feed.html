@@ -1,0 +1,30 @@
+{% for ticket in tickets %}
+  <div class="blog-box">
+    <h3 class="problem-feed-name">
+      <a href="{{ ticket.linked_item.get_absolute_url() }}">
+        {{ ticket.linked_item|item_title }}</a>
+      &#183
+      <a href="{{ url('ticket', ticket.id) }}">
+        {{ ticket.title }}
+      </a>
+    </h3>
+    {% with author_id = ticket.user_id %}
+      {% if author_id %}
+        <div class="problem-feed-info-entry">
+          <i class="far fa-pen-to-square"></i>
+          <span class="pi-value">{{ link_user(author_id) }}</span>
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% set last_message = ticket.messages.last() %}
+    <div class="problem-feed-types">
+      <i class="fa fa-tag"></i>
+      {{link_user(last_message.user_id)}} {{_('replied')}}
+    </div>
+    <div class='blog-description content-description'>
+      {{ last_message.body|markdown(lazy_load=True)|reference|str|safe }}
+      <div class="show-more"> {{_("...More")}} </div>
+    </div>
+  </div>
+{% endfor %}
+{% include "feed/has_next.html" %}

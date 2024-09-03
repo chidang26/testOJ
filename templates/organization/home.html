@@ -1,0 +1,55 @@
+{% extends "organization/home-base.html" %}
+
+{% block title_ruler %}{% endblock %}
+
+{% block org_js %}
+  {% include "actionbar/media-js.html" %}
+  {% include "feed/feed_js.html" %}
+{% endblock %}
+
+{% block middle_title %}
+  <div class="page-title">
+    <div class="tabs" style="border: none;">
+      <h2>
+        {% if organization_image %}
+          <img src="{{organization_image.url}}" style="height: 3rem; vertical-align: middle; border-radius: 5px;">
+        {% endif %}
+        {{title}}
+      </h2>
+      <span class="spacer"></span>
+
+      {% if request.user.is_authenticated %}
+        {% if is_member %}
+        {% elif organization.is_open or can_edit %}
+          <form method="post" action="{{ url('join_organization', organization.id, organization.slug) }}">
+            {% csrf_token %}
+            <input type="submit" class="unselectable button" value="{{ _('Join') }}">
+          </form>
+        {% else %}
+          <a href="{{ url('request_organization', organization.id, organization.slug) }}"
+            class="unselectable button">
+            {{ _('Request membership') }}</a>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block middle_content %}
+  {% block before_posts %}{% endblock %}
+  {% if is_member or can_edit %}
+    {% include "blog/content.html" %}
+  {% else %}
+    <div class="blog-sidebox sidebox">
+      <h3><i class="fa fa-info-circle"></i>{{ _('About') }}</h3>
+      <div class="sidebox-content">
+        <div style="margin: 0.3em;">
+          {% cache 3600 'organization_html' organization.id %}
+            {{ organization.about|markdown|reference|str|safe }}
+          {% endcache %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% block after_posts %}{% endblock %}
+{% endblock %}

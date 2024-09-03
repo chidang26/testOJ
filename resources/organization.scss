@@ -1,0 +1,128 @@
+@import "vars";
+
+.leave-organization, .leave-organization:hover {
+    color: red;
+}
+#control-list li {
+    border-bottom: 1px solid black;
+}
+#pending-count-box {
+    float: right;
+    text-align: center;
+    background: red;
+    color: white;
+    border-radius: 3px;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+.org-field-wrapper {
+    input[type=text], textarea {
+        width: 100%;
+    }
+    .select2 {
+        width: 100% !important;
+    }
+}
+.org-field-wrapper {
+    margin-top: 0.4em;
+}
+.org-field-wrapper:has(> input[type=checkbox]) {
+    display: contents;
+}
+
+.organization-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+}
+
+.organization-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 1em;
+    transition: transform 0.3s;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+        transform: translateY(-5px);
+        color: $theme_color;
+    }
+
+    img.org-logo {
+        width: 100%;
+        border-radius: 8px 8px 0 0;
+        object-fit: contain;
+        object-position: center;
+        flex-shrink: 0;
+        background-color: #f0f0f0;
+    }
+
+    .org-details {
+        padding: 1em 0;
+
+        span {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+    }
+}
+
+@media(min-width: 800px) {
+    .organization-card {
+        flex: 1 1 calc(33.33% - 1em);
+        max-width: calc(33.33% - 1em);
+
+        img.org-logo {
+            height: 150px;
+        }
+    }
+}
+
+@media(max-width: 799px) {
+    .organization-card {
+        flex: 1 1 calc(50% - 1em);
+        max-width: calc(50% - 1em);
+
+        img.org-logo {
+            height: 120px;
+        }
+    }
+}
+
+.organization-row {
+    display: block;
+    padding: 0.5em;
+    border-bottom: 1px #ccc solid;
+    border-top: none;
+    color: black;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        background-color: #f3f3f3;
+    }
+}
+
+.org-help-text {
+    display: block;
+    color: gray;
+}
+
+#search-organization {
+    width: 100%;
+    height: 2.3em;
+}
